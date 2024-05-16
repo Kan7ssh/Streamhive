@@ -38,11 +38,19 @@ jobs:
         uses: azure/login@v2
         with:
           use_msi: true # Enable Managed Identity authentication
+    
+      - name: Download artifact for deployment
+        uses: actions/download-artifact@v3
+        with:
+          name: react-app
+
+# ... (rest of your workflow steps)
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: streamhive-streamer  # Replace with your Azure Web App name
-          resource-group: college_project_rg # Replace with your resource group name
-          package: ${{ artifacts.react-app }}
+          resource-group: college_project_rg  # Replace with your resource group name
+          package: ./react-app  # Path to the downloaded artifact
+
 
